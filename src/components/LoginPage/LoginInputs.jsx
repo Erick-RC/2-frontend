@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 export const LoginInputs = () => {
   return (
@@ -38,7 +39,7 @@ export const LoginInputs = () => {
                 </div>
                 <div className="relative">
                   <button className="bg-[#3a868f] text-white rounded-md px-2 py-1 shadow-md shadow-black active:shadow-none active:transform active:translate-y-1 transition-all">
-                    Login
+                    <Link to={"/dashboard"}>Login</Link> 
                   </button>
                 </div>
               </div>
