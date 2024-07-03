@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Navbar } from '../components/Dashboard/Navbar';
 import { AsideOptions } from '../components/Dashboard/AsideOptions';
 import { NewTestBtn } from '../components/Dashboard/NewTestBtn';
+import { MainContent } from '../components/Dashboard/MainContent';
 
 const Dashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -28,9 +29,7 @@ const Dashboard = () => {
 
       {/* Main Content */}
       <main className="sm:ml-64 mt-20 p-4">
-        <h1 className="text-3xl font-bold text-gray-800 mb-4">¡Bienvenido, Erick Rabago!</h1>
-        <p className="text-lg text-gray-600">Disfruta explorando nuestro sitio web.</p>
-        {/* Contenido principal aquí */}
+        <MainContent/>
       </main>
     </>
   );
