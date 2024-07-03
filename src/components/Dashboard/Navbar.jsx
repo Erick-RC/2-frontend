@@ -19,7 +19,7 @@ export const Navbar = () => {
 
                                     <button type="button" className="flex text-sm  bg-transparent rounded-full ring-4 ring-custom-MainSky" aria-expanded="false">
                                         <span className="sr-only">Open user menu</span>
-                                        <img className="h-14 w-14 bg-cover rounded-full" src="./examplephoto.jpg" alt="user photo"/>
+                                        <img className="h-10 w-10 sm:h-12 sm:w-12 md:h-14 md:w-14 bg-cover rounded-full" src="./examplephoto.jpg" alt="user photo"/>
                                     </button>
                                 </div>
                             </div>
