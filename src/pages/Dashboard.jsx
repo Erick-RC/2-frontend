@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Navbar } from '../components/Dashboard/Navbar.jsx';
 import { AsideOptions } from '../components/Dashboard/AsideOptions.jsx';
 import { NewTestBtn } from '../components/Dashboard/NewTestBtn.jsx';
-import { MainContent } from '../components/Dashboard/MainContent.jsx';
+import  MainContent  from '../components/Dashboard/MainContent.jsx';
 import StudentTable from './StudentsTable';
 
 const Dashboard = () => {
