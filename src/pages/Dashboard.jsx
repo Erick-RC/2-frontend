@@ -1,11 +1,23 @@
 import React, { useState } from 'react';
-import { Navbar } from '../components/Dashboard/Navbar';
-import { AsideOptions } from '../components/Dashboard/AsideOptions';
-import { NewTestBtn } from '../components/Dashboard/NewTestBtn';
-import { MainContent } from '../components/Dashboard/MainContent';
+import { Navbar } from '../components/Dashboard/Navbar.jsx';
+import { AsideOptions } from '../components/Dashboard/AsideOptions.jsx';
+import { NewTestBtn } from '../components/Dashboard/NewTestBtn.jsx';
+import { MainContent } from '../components/Dashboard/MainContent.jsx';
+import StudentTable from './StudentsTable';
 
 const Dashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [view, setView] = useState('welcome'); // Estado para controlar la vista
+
+  const renderView = () => {
+    switch (view) {
+      case 'students':
+        return <StudentTable />;
+      case 'welcome':
+      default:
+        return <MainContent />;
+    }
+  };
 
   return (
     <>
@@ -21,7 +33,7 @@ const Dashboard = () => {
         aria-label="Sidebar"
       >
         <div className="h-full px-3 pb-4 overflow-y-auto bg-gradient-to-b from-custom-MainSky to-emerald-100 flex flex-col">
-          <AsideOptions />
+          <AsideOptions setView={setView} />
           <NewTestBtn />
           <img className="h-auto mt-4 rounded-lg shadow-xl border-4 border-teal-800" src="./asideImage.PNG" alt="Test image" />
         </div>
@@ -29,11 +41,10 @@ const Dashboard = () => {
 
       {/* Main Content */}
       <main className="sm:ml-64 mt-20 p-4">
-        <MainContent/>
+        {renderView()}
       </main>
     </>
   );
 };
 
 export default Dashboard;
-
