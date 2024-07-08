@@ -56,7 +56,7 @@ const Dashboard = () => {
             </>
           ) : user.role === 'student' ? (
             <>
-              <MyVideosBtn />
+             <MyVideosBtn setView={setView} />
               <MyExamsBtn />
             </>
           ) : null}
