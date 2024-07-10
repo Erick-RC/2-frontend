@@ -3,15 +3,22 @@ import { useReactMediaRecorder } from 'react-media-recorder';
 import { useMutation } from '@tanstack/react-query';
 import { UserContext } from '../../services/UserContext';
 import { postVideo } from '../../api/fetchVideos';
+import { useNavigate } from 'react-router-dom';
+import VideoRecorder from '../../components/VideoR/VideoRecorder';
 
 function Create() {
     const [isReady, setIsReady] = useState(false);
     const { user, loading } = useContext(UserContext);
     const videoRef = useRef(null);
+    const navigate = useNavigate()
 
-    // Implementación modificada de useMutation
+
     const videoMutation = useMutation({
         mutationFn: postVideo,
+        onSuccess: () => {
+            alert('video creado');
+            navigate('/videos')
+        },
         onError: (error) => {
             console.error('Error en la mutación:', error);
         }
@@ -22,13 +29,13 @@ function Create() {
         return () => clearTimeout(timer);
     }, []);
 
-    const { 
+    const {
         status,
-        mediaBlobUrl, 
+        mediaBlobUrl,
         previewStream,
-        startRecording, 
-        stopRecording, 
-        pauseRecording, 
+        startRecording,
+        stopRecording,
+        pauseRecording,
         resumeRecording
     } = useReactMediaRecorder({
         video: true,
@@ -61,8 +68,8 @@ function Create() {
 
             const data = new FormData(e.target);
             data.append('video', videoBlob, 'video-neymar.mp4');
-            const res = await videoMutation.mutateAsync(data);
-            console.log(res);
+            await videoMutation.mutateAsync(data);
+
         } catch (error) {
             console.error('Error al subir el video:', error);
         }
@@ -86,14 +93,14 @@ function Create() {
                 <h2 className="text-2xl font-bold text-MainSky mb-6 text-center">Crear Nuevo Video</h2>
                 <div className="mb-6">
                     <label htmlFor="title" className="block text-gray-700 text-sm font-bold mb-2">Título:</label>
-                    <input 
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-MainSky focus:border-transparent" 
-                        type="text" 
-                        name="title"/>
+                    <input
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-MainSky focus:border-transparent"
+                        type="text"
+                        name="title" />
                 </div>
                 <div className="mb-6">
                     <label htmlFor="user" className="block text-gray-700 text-sm font-bold mb-2">Usuario:</label>
-                    <input 
+                    <input
                         type="text"
                         value={`${user.name} ${user.lastname}`}
                         readOnly
@@ -101,77 +108,25 @@ function Create() {
                     />
                     <input type="hidden" name="user" value={user._id} />
                 </div>
-                {status === 'stopped' && (
-                    <video src={mediaBlobUrl} 
-                    className="h-[300px] w-full object-cover"
-                    controls 
-                    autoPlay>
-                    </video>    
-                )}
-                {(status === 'recording' || status === 'paused') && (
-                    <video ref={videoRef}
-                        className="h-[300px] w-full object-cover"
-                        controls
-                        autoPlay
-                        muted>
-                    </video>
-                )}
-               
-                <div className="flex justify-center items-center">
-                    {status === 'idle' && (
-                        <button 
-                            className="w-full bg-[#3a868f] hover:bg-opacity-90 text-white font-bold py-2 px-4 rounded-md transition duration-300 mb-4"
-                            type="button" 
-                            onClick={startRecording}
-                        >
-                            Iniciar grabación
-                        </button>
-                    )}
-                    {status === 'stopped' && (
-                        <button 
-                            className="w-full bg-[#3a868f] hover:bg-opacity-90 text-white font-bold py-2 px-4 rounded-md transition duration-300 mb-4"
-                            type="button" 
-                            onClick={startRecording}
-                        >
-                            Volver a grabar
-                        </button>
-                    )}       
-                    {status === 'paused' && (
-                        <button 
-                            type="button"
-                            className="w-full bg-blue-600 hover:bg-opacity-90 text-white font-bold py-2 px-4 rounded-md transition duration-300 mb-4" 
-                            onClick={resumeRecording} >
-                            Reanudar
-                        </button>
-                    )}
-                    {(status === 'recording' || status === 'paused') &&  (
-                        <>
-                            <button 
-                                type="button"
-                                className="w-full bg-yellow-600 hover:bg-opacity-90 text-white font-bold py-2 px-4 rounded-md transition duration-300 mb-4" 
-                                onClick={pauseRecording} >
-                                Pausar 
-                            </button>
-                            <button 
-                                type="button"
-                                className="w-full bg-red-400 hover:bg-opacity-90 text-white font-bold py-2 px-4 rounded-md transition duration-300 mb-4" 
-                                onClick={stopRecording}>
-                                Detener 
-                            </button>
-                        </>
-                    )}
-                </div>
-               
+                <VideoRecorder
+                    status={status}
+                    mediaBlobUrl={mediaBlobUrl}
+                    startRecording={startRecording}
+                    resumeRecording={resumeRecording}
+                    pauseRecording={pauseRecording}
+                    stopRecording={stopRecording}
+                    videoRef={videoRef} />
+
                 <div className="flex justify-between items-center">
-                    <button 
-                        className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white font-bold rounded-md transition duration-300" 
+                    <button
+                        className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white font-bold rounded-md transition duration-300"
                         type="submit"
                     >
                         Guardar
                     </button>
-                    <button 
-                        className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white font-bold rounded-md transition duration-300" 
-                        type="reset"
+                    <button
+                        className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white font-bold rounded-md transition duration-300"
+                        onClick={() => navigate('/videos')}
                     >
                         Cancelar
                     </button>

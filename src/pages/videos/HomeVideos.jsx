@@ -1,17 +1,20 @@
-import { useQuery } from "@tanstack/react-query";
-import { fetchVideos } from "../../api/fetchVideos";
-import { Link } from "react-router-dom";
+import React, { useContext } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { fetchVideos } from '../../api/fetchVideos';
+import { Link } from 'react-router-dom';
+import { UserContext } from '../../services/UserContext';
 
 function HomeVideos() {
+    const { user, loading } = useContext(UserContext);
+
     const { data, error, isLoading } = useQuery({
-        queryKey: ['videos'],
-        queryFn: fetchVideos,
+        queryKey: ['videos', user?._id],
+        queryFn: () => fetchVideos(user?._id),
+        enabled: !!user, // Solo ejecuta la consulta si el usuario está disponible
     });
 
-    if (isLoading) return <div>Loading...</div>;
+    if (loading || isLoading) return <div>Loading...</div>;
     if (error) return <div>Error: {error.message}</div>;
-
-    console.log(data);
 
     return (
         <main className="min-h-screen flex items-center justify-center bg-gray-100">
