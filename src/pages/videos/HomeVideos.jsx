@@ -23,6 +23,7 @@ function HomeVideos() {
                     <Link className="bg-[#3a868f] hover:bg-[#327377] transition-colors rounded-md p-3 text-white shadow-md" to="/videos/create">New Video</Link>
                 </div>
                 <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+                    {data.length === 0 && <p>NO HAY VIDEOS DISPONIBLES</p>}
                     {data && data.map(video => (
                         <Link key={video._id} to={`/videos/${video._id}`} className="group">
                             <div className="p-6 border border-gray-300 rounded-lg shadow-md hover:shadow-lg transition-shadow h-full flex flex-col justify-between bg-[#e0f4f5] group-hover:bg-[#ccebe6]">
