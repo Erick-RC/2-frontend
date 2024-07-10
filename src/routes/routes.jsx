@@ -5,6 +5,8 @@ import HomeVideos from "../pages/videos/HomeVideos.jsx";
 import Edit from "../pages/videos/Edit.jsx"
 import Detail from "../pages/videos/Detail.jsx"
 import Create from "../pages/videos/Create.jsx"
+import { MyInfo } from "../components/Dashboard/MyInfo.jsx";
+
 
 export const router = createBrowserRouter([
     {
