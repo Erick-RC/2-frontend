@@ -10,3 +10,4 @@ export const fetchUsers = async () => {
     })
     return res.data
 }
+
