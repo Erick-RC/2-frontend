@@ -2,7 +2,7 @@ import React from 'react'
 
 export const MyInfoBtn = ({ setView }) => {
   return (
-    <ul className="font-medium mt-4 ">
+
       <li>
         <button 
           onClick={() => setView('myInfo')} 
@@ -16,6 +16,6 @@ export const MyInfoBtn = ({ setView }) => {
           <span className="ml-3 text-lg text-white">My Info</span>
         </button>
       </li>
-    </ul>
+
   )
 }

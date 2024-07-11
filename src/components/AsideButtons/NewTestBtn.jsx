@@ -2,7 +2,7 @@ import React from "react";
 
 const NewTestBtn = () => {
   return (
-    <ul className="space-y-8 font-medium mt-36">
+
       <li>
         <a href="#" className="focus:outline-none focus:ring-2 focus:ring-gray-200 flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-600 group">
           <svg className="flex-shrink-0 w-8 text-white transition duration-75 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -13,7 +13,7 @@ const NewTestBtn = () => {
           <span className="flex-1 ml-3 text-lg whitespace-nowrap">Nuevo examen</span>
         </a>
       </li>
-    </ul>
+
   );
 };
 export default NewTestBtn;

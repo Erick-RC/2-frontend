@@ -16,7 +16,7 @@ const MyVideosBtn = ({ setView }) => {
   };
 
   return (
-    <ul className="space-y-8 font-medium mt-14">
+
       <li>
         <a
           href="#"
@@ -36,7 +36,7 @@ const MyVideosBtn = ({ setView }) => {
           <span className="ml-3 text-lg">My Videos</span>
         </a>
       </li>
-    </ul>
+
   );
 };
 
