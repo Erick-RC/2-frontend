@@ -76,7 +76,7 @@ export const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
                 >
                   <img
                     className="h-10 w-10 sm:h-12 sm:w-12 md:h-14 md:w-14 bg-cover rounded-full"
-                    src={user.photo || './examplephoto.jpg'}
+                    src={user.profileImage || './examplephoto.jpg'}
                     alt="user photo"
                   />
                 </button>
@@ -84,8 +84,25 @@ export const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
                   <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10">
                     <button
                       onClick={handleLogout}
-                      className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      className="flex items-center w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     >
+                      <svg
+                        className="w-6 h-6 text-gray-800 mr-2"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke="currentColor"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M16 12H4m12 0-4 4m4-4-4-4m3-4h2a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3h-2"
+                        />
+                      </svg>
                       Cerrar sesión
                     </button>
                   </div>
