@@ -14,6 +14,7 @@ import { MyInfo } from '../components/Dashboard/MyInfo.jsx';
 const Dashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [view, setView] = useState('welcome');
+  const [editStudentId, setEditStudentId] = useState(null);
   const { user, loading } = useContext(UserContext);
 
   if (loading) {
@@ -27,7 +28,7 @@ const Dashboard = () => {
   const renderView = () => {
     switch (view) {
       case 'students':
-        return <StudentsTable />;
+        return <StudentsTable setView={setView} setEditStudentId={setEditStudentId} />;
       case 'myInfo':
         return <MyInfo />;
       case 'welcome':

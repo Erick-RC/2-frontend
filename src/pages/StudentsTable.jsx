@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { UserContext } from '../services/UserContext'; // Ajusta la ruta según tu estructura de archivos
+import { UserContext } from '../services/UserContext';
 import axios from 'axios';
 
 const StudentsTable = () => {
@@ -19,7 +19,6 @@ const StudentsTable = () => {
       const response = await axios.get('http://localhost:3000/users', {
         headers: { Authorization: `Bearer ${token}` }
       });
-      // Filtramos los estudiantes que tienen el mismo nivel que el profesor
       const filteredStudents = response.data.filter(
         student => student.role === 'student' && student.nivel === user.nivel
       );
@@ -50,6 +49,7 @@ const StudentsTable = () => {
         <table className="w-full text-sm md:text-base text-left text-gray-500">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50">
             <tr>
+              <th scope="col" className="py-3 px-4 sm:px-6">Image</th>
               <th scope="col" className="py-3 px-4 sm:px-6">Name</th>
               <th scope="col" className="py-3 px-4 sm:px-6">Email</th>
               <th scope="col" className="py-3 px-4 sm:px-6">Nivel</th>
@@ -59,6 +59,13 @@ const StudentsTable = () => {
           <tbody>
             {filteredStudents.map((student) => (
               <tr key={student._id} className="bg-white border-b hover:bg-gray-50 transition duration-150 ease-in-out">
+                <td className="py-4 px-4 sm:px-6">
+                  <img 
+                    src={`http://localhost:3000/${student.profileImage}`} 
+                    alt={`${student.name}'s profile`}
+                    className="w-10 h-10 rounded-full object-cover"
+                  />
+                </td>
                 <th scope="row" className="py-4 px-4 sm:px-6 font-medium text-gray-900">
                   {student.name} {student.lastname}
                 </th>
