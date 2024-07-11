@@ -13,7 +13,7 @@ function Detail() {
     });
 
     const deleteVideoMutation = useMutation({
-        mutationFn: deleteVideo, 
+        mutationFn: deleteVideo,
         onSuccess: () => {
             alert('Video eliminado');
             navigate('/videos');
@@ -27,16 +27,16 @@ function Detail() {
 
     if (isLoading) {
         return (
-            <div className="flex justify-center items-center h-screen bg-gray-100">
-                <p className="text-xl font-semibold text-MainSky">Cargando información...</p>
+            <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-[#3a868f] to-[#71c7d1]">
+                <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-white"></div>
             </div>
         );
     }
 
     if (!data) {
         return (
-            <div className="flex justify-center items-center h-screen bg-gray-100">
-                <p className="text-xl font-semibold text-red-500">No se encontraron datos</p>
+            <div className="min-h-screen flex items-center justify-center bg-red-100">
+                <div className="text-red-600 text-xl font-semibold">No se encontraron datos</div>
             </div>
         );
     }
@@ -49,40 +49,41 @@ function Detail() {
     };
 
     return (
-        <main className="max-w-4xl mx-auto mt-12 p-8 bg-white shadow-lg rounded-lg">
-            <Link 
-                to='/videos' 
-                className="absolute top-5 left-5 bg-[#3a868f] hover:bg-opacity-80 text-white py-2 px-4 rounded-lg shadow-md transition duration-300"
+        <main className="min-h-screen bg-gradient-to-r from-[#3a868f] to-[#71c7d1] py-12 px-4 sm:px-6 lg:px-8">
+            <Link
+                to='/videos'
+                className="fixed top-5 left-5 bg-white text-[#3a868f] py-2 px-4 rounded-full shadow-lg hover:bg-[#3a868f] hover:text-white transition duration-300"
             >
-                Volver
+                ← Volver
             </Link>
-            <section className="mb-8">
-                <video
-                    src={`http://localhost:3000/videos/content/${id}`}
-                    controls
-                    autoPlay
-                    className="w-full rounded-lg shadow-md"
-                ></video>
-            </section>
-            <section className="mb-8">
-                <h1 className="text-3xl font-bold mb-2 text-[#3a868f]">{data.title}</h1>
-                <p className="text-lg text-gray-700">
-                    Usuario: <span className="font-semibold">{data.user.name} {data.user.lastname}</span>
-                </p>
-            </section>
-            <section className="flex justify-end items-center gap-4">
-                <button className="px-6 py-3 bg-[#3a868f] hover:bg-opacity-80 text-white rounded-lg font-bold shadow-md transition duration-300"
-                onClick={() => navigate(`/videos/edit/${data._id}`)}
-                >
-                    Editar
-                </button>
-                <button 
-                    className="px-6 py-3 bg-red-500 hover:bg-opacity-80 text-white rounded-lg font-bold shadow-md transition duration-300" 
-                    onClick={handleDeleteVideo}
-                >
-                    Eliminar
-                </button>
-            </section>
+            <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
+                <section className="p-8">
+                    <video
+                        src={`http://localhost:3000/videos/content/${id}`}
+                        controls
+                        autoPlay
+                        className="w-full rounded-lg shadow-md mb-8"
+                    ></video>
+                    <h1 className="text-3xl font-bold mb-2 text-[#3a868f]">{data.title}</h1>
+                    <p className="text-lg text-gray-700 mb-8">
+                        Usuario: <span className="font-semibold">{data.user.name} {data.user.lastname}</span>
+                    </p>
+                    <div className="flex justify-end items-center gap-4">
+                        <button 
+                            className="px-6 py-3 bg-[#3a868f] hover:bg-[#2c666d] text-white rounded-full font-bold shadow-md transition duration-300"
+                            onClick={() => navigate(`/videos/edit/${data._id}`)}
+                        >
+                            Editar
+                        </button>
+                        <button 
+                            className="px-6 py-3 bg-red-500 hover:bg-red-600 text-white rounded-full font-bold shadow-md transition duration-300"
+                            onClick={handleDeleteVideo}
+                        >
+                            Eliminar
+                        </button>
+                    </div>
+                </section>
+            </div>
         </main>
     );
 }
