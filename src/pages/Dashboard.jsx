@@ -38,38 +38,43 @@ const Dashboard = () => {
   };
 
   return (
-    <>
-      <Navbar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-
+    <div className="flex h-screen bg-gray-100">
       <aside
-        id="logo-sidebar"
-        className={`fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform transform ${
+        className={`fixed top-0 left-0 z-40 w-64 h-full transition-transform transform ${
           sidebarOpen ? 'translate-x-0' : '-translate-x-full'
         } bg-white border-r border-gray-200 sm:translate-x-0`}
         aria-label="Sidebar"
       >
-        <div className="h-full px-3 pb-4 overflow-y-auto bg-gradient-to-b from-custom-MainSky to-emerald-100 flex flex-col">
-          {user.role === 'teacher' ? (
-            <>
-              <ExamsBtn setView={setView} />
-              <StudentsBtn setView={setView} />
-              <NewTestBtn setView={setView} />
-            </>
-          ) : user.role === 'student' ? (
-            <>
-              <MyVideosBtn setView={setView} />
-              <MyInfoBtn setView={setView} />
-              <MyExamsBtn setView={setView} />
-            </>
-          ) : null}
-          <img className="h-auto mt-4 rounded-lg shadow-xl border-4 border-teal-800" src="./asideImage.PNG" alt="Test image" />
+        <div className="h-full flex flex-col bg-gradient-to-b from-custom-MainSky to-emerald-100">
+          <div className="p-4 flex justify-start items-center">
+            <img className="h-32" src="./logo-transparent-png.png" alt="logo" />
+          </div>
+          <div className="flex-1 px-3 pb-4 overflow-y-auto">
+            {user.role === 'teacher' ? (
+              <>
+                <ExamsBtn setView={setView} />
+                <StudentsBtn setView={setView} />
+                <NewTestBtn setView={setView} />
+              </>
+            ) : user.role === 'student' ? (
+              <>
+                <MyVideosBtn setView={setView} />
+                <MyInfoBtn setView={setView} />
+                <MyExamsBtn setView={setView} />
+              </>
+            ) : null}
+            <img className="h-auto mt-4 rounded-lg shadow-xl border-4 border-teal-800" src="./asideImage.PNG" alt="Test image" />
+          </div>
         </div>
       </aside>
 
-      <main className="sm:ml-64 mt-20 p-4">
-        {renderView()}
-      </main>
-    </>
+      <div className="flex-1 flex flex-col overflow-hidden sm:ml-64">
+        <Navbar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+        <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 p-4">
+          {renderView()}
+        </main>
+      </div>
+    </div>
   );
 };
 
