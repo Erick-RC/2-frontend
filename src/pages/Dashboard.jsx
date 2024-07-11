@@ -21,13 +21,13 @@ const Dashboard = () => {
   }
 
   if (!user) {
-    return <div>User not logged in.</div>;
+    return <div>User not logged in...</div>;
   }
 
   const renderView = () => {
     switch (view) {
       case 'students':
-        return <StudentTable />;
+        return <StudentsTable />;
       case 'myInfo':
         return <MyInfo />;
       case 'welcome':

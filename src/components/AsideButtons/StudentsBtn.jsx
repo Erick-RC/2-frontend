@@ -1,6 +1,6 @@
 import React from 'react'
 
-const StudentsBtn = () => {
+const StudentsBtn = ({ setView }) => {
     return (
         <ul className="space-y-8 font-medium mt-14">
             <li>
