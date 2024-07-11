@@ -2,6 +2,23 @@ import React, { useState, useContext, useEffect } from 'react';
 import { UserContext } from '../services/UserContext';
 import axios from 'axios';
 
+const Modal = ({ isOpen, onClose, children }) => {
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center p-4">
+      <div className="bg-grey-300 rounded-lg w-full max-w-4xl max-h-[90vh] shadow-2xl flex flex-col">
+        <div className="sticky top-0 bg-gradient-to-r from-custom-MainSky to-sky-400 p-4 rounded-t-lg">
+          <button onClick={onClose} className="float-right text-white text-2xl hover:text-gray-200 transition-colors">&times;</button>
+          <h2 className="text-2xl text-center font-bold text-white">Videos del Estudiante</h2>
+        </div>
+        <div className="p-6 text-center overflow-y-auto custom-scrollbar">
+          {children}
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const StudentsTable = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -69,8 +86,11 @@ const StudentsTable = () => {
     student.matricula.toString().includes(searchTerm)
   );
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const handleViewVideos = (studentId) => {
     setSelectedStudent(studentId);
+    setIsModalOpen(true);
   };
 
   return (
@@ -79,21 +99,21 @@ const StudentsTable = () => {
         <input
           type="text"
           className="block w-full p-3 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out"
-          placeholder="Search for student's name, email, or ID"
+          placeholder="Buscar por nombre, email o ID del estudiante"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
       </div>
       <div className="overflow-x-auto relative shadow-md sm:rounded-lg">
         <table className="w-full text-sm md:text-base text-left text-gray-500">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-50">
+          <thead className="text-xs text-gray-700 uppercase bg-gradient-to-r from-emerald-600 to-sky-600">
             <tr>
-              <th scope="col" className="py-3 px-4 sm:px-6">Image</th>
-              <th scope="col" className="py-3 px-4 sm:px-6">Name</th>
-              <th scope="col" className="py-3 px-4 sm:px-6">Email</th>
-              <th scope="col" className="py-3 px-4 sm:px-6">Nivel</th>
-              <th scope="col" className="py-3 px-4 sm:px-6">Student ID</th>
-              <th scope="col" className="py-3 px-4 sm:px-6">Videos</th>
+              <th scope="col" className="py-3 px-4 sm:px-6 text-white">Imagen</th>
+              <th scope="col" className="py-3 px-4 sm:px-6 text-white">Nombre</th>
+              <th scope="col" className="py-3 px-4 sm:px-6 text-white">Email</th>
+              <th scope="col" className="py-3 px-4 sm:px-6 text-white">Nivel</th>
+              <th scope="col" className="py-3 px-4 sm:px-6 text-white">ID Estudiante</th>
+              <th scope="col" className="py-3 px-4 sm:px-6 text-white">Videos</th>
             </tr>
           </thead>
           <tbody>
@@ -116,7 +136,7 @@ const StudentsTable = () => {
                   {videos[student._id] && videos[student._id].length > 0 ? (
                     <button
                       onClick={() => handleViewVideos(student._id)}
-                      className="text-blue-600 hover:text-blue-800 transition duration-150 ease-in-out"
+                      className="bg-sky-600 text-white px-3 py-2 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all duration-300"
                     >
                       Ver {videos[student._id].length} video(s)
                     </button>
@@ -130,26 +150,26 @@ const StudentsTable = () => {
         </table>
       </div>
 
-      {selectedStudent && (
-        <div className="mt-8">
-          <h2 className="text-lg font-semibold mb-4">Videos de Estudiante</h2>
-          {videos[selectedStudent] && videos[selectedStudent].length > 0 ? (
-            <ul>
-              {videos[selectedStudent].map((video) => (
-                <li key={video._id} className="mb-4">
-                  <h3 className="text-md font-medium">{video.title}</h3>
-                  <video width="320" height="240" controls>
-                    <source src={`http://localhost:3000/videos/content/${video._id}`} type="video/mp4" />
-                    Tu navegador no soporta el elemento de video.
-                  </video>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <div>No hay videos disponibles</div>
-          )}
-        </div>
-      )}
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        {selectedStudent && videos[selectedStudent] && videos[selectedStudent].length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {videos[selectedStudent].map((video) => (
+              <div key={video._id} className="bg-white rounded-lg overflow-hidden shadow-lg transition-all hover:shadow-xl">
+                <video className="w-full h-48 object-cover" controls>
+                  <source src={`http://localhost:3000/videos/content/${video._id}`} type="video/mp4" />
+                  Tu navegador no soporta el elemento de video.
+                </video>
+                <div className="p-4">
+                  <h3 className="text-lg font-semibold mb-2 text-gray-800">{video.title}</h3>
+                  <p className="text-sm text-gray-600">{video.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="text-center text-gray-600">No hay videos disponibles para este estudiante.</div>
+        )}
+      </Modal>
     </div>
   );
 };
