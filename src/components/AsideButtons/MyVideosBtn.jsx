@@ -21,7 +21,7 @@ const MyVideosBtn = ({ setView }) => {
         <a
           href="#"
           onClick={handleVideos}
-          className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-600 group"
+          className="focus:outline-none focus:ring-2 focus:ring-gray-200 flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-600 group"
         >
           <svg
             className="w-8 text-white transition duration-75 group-hover:text-gray-900 dark:group-hover:text-white"
