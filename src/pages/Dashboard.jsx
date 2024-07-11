@@ -10,6 +10,7 @@ import MyExamsBtn from '../components/AsideButtons/MyExamsBtn.jsx';
 import { UserContext } from '../services/UserContext';
 import { MyInfoBtn } from '../components/AsideButtons/MyInfoBtn.jsx';
 import { MyInfo } from '../components/Dashboard/MyInfo.jsx';
+import { MainBtn } from '../components/AsideButtons/MainBtn.jsx';
 
 const Dashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -31,6 +32,8 @@ const Dashboard = () => {
         return <StudentsTable setView={setView} setEditStudentId={setEditStudentId} />;
       case 'myInfo':
         return <MyInfo />;
+        case 'main':
+          return <MainContent />;
       case 'welcome':
       default:
         return <MainContent />;
@@ -54,13 +57,14 @@ const Dashboard = () => {
               <>
                 <ExamsBtn setView={setView} />
                 <StudentsBtn setView={setView} />
+                <MainBtn setView={setView} />
                 <NewTestBtn setView={setView} />
               </>
             ) : user.role === 'student' ? (
               <>
                 <MyVideosBtn setView={setView} />
+                <MainBtn setView={setView} />
                 <MyInfoBtn setView={setView} />
-                <MyExamsBtn setView={setView} />
               </>
             ) : null}
             <img className="h-auto mt-4 rounded-lg shadow-xl border-4 border-teal-800" src="./asideImage.PNG" alt="Test image" />
