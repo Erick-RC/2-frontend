@@ -1,10 +1,26 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useRef, useEffect } from 'react';
 import { UserContext } from '../../services/UserContext';
+import { useNavigate } from 'react-router-dom';
 
 export const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
-  const { user } = useContext(UserContext);
+  const { user, logout } = useContext(UserContext);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
+  const navigate = useNavigate();
 
-  // Verificar si user es null o undefined
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   if (!user) {
     return (
       <div className="flex items-center justify-center h-full">
@@ -12,6 +28,12 @@ export const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
       </div>
     );
   }
+
+  const handleLogout = () => {
+    logout();
+    setDropdownOpen(false);
+    navigate('/');
+  };
 
   return (
     <nav className="fixed top-0 z-50 w-full bg-gray-100 border-b border-gray-100">
@@ -45,12 +67,12 @@ export const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
           <div className="flex items-center">
             <div className="flex items-center ms-3">
               <span className="text-xl mr-4"> {user.name} {user.lastname} </span>
-              {/* User photo */}
-              <div>
+              {/* User photo and dropdown */}
+              <div className="relative" ref={dropdownRef}>
                 <button
                   type="button"
                   className="flex text-sm bg-transparent rounded-full ring-4 ring-custom-MainSky"
-                  aria-expanded="false"
+                  onClick={() => setDropdownOpen(!dropdownOpen)}
                 >
                   <img
                     className="h-10 w-10 sm:h-12 sm:w-12 md:h-14 md:w-14 bg-cover rounded-full"
@@ -58,6 +80,16 @@ export const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
                     alt="user photo"
                   />
                 </button>
+                {dropdownOpen && (
+                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10">
+                    <button
+                      onClick={handleLogout}
+                      className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    >
+                      Cerrar sesión
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           </div>
