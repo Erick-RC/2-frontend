@@ -45,19 +45,11 @@ export const MyInfo = () => {
                 Welcome back, {user.name}!
               </p>
             </div>
-            {profileImageUrl ? (
-              <img
-                src={profileImageUrl}
-                alt="Profile"
-                className="h-32 w-32 rounded-full object-cover border-4 border-white shadow-lg"
-              />
-            ) : (
               <img
                 src={avatarUrl}
                 alt="Profile"
                 className="h-32 w-32 rounded-full object-cover border-4 border-white shadow-lg"
               />
-            )}
           </div>
         </div>
         <div className="px-6 py-8 sm:px-10">
