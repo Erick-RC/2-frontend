@@ -121,7 +121,7 @@ const StudentsTable = () => {
               <tr key={student._id} className="bg-white border-b hover:bg-gray-50 transition duration-150 ease-in-out">
                 <td className="py-4 px-4 sm:px-6">
                   <img
-                    src={`http://localhost:3000/${student.profileImage}`}
+                    src={`https://ui-avatars.com/api/?name=${student.name}+${student.lastname}`}
                     alt={`${student.name}'s profile`}
                     className="w-10 h-10 rounded-full object-cover"
                   />

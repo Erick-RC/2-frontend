@@ -30,6 +30,8 @@ export const MyInfo = () => {
 
   const profileImageUrl = getProfileImageUrl(user.profileImage);
 
+  const avatarUrl = `https://ui-avatars.com/api/?name=${user.name}+${user.lastname}`;
+
   return (
     <div className="bg-gradient-to-r from-blue-100 to-cyan-100 min-h-screen py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto bg-white shadow-2xl rounded-lg overflow-hidden">
@@ -50,9 +52,11 @@ export const MyInfo = () => {
                 className="h-32 w-32 rounded-full object-cover border-4 border-white shadow-lg"
               />
             ) : (
-              <div className="h-32 w-32 rounded-full bg-gray-300 flex items-center justify-center text-gray-500 text-4xl font-bold">
-                {user.name.charAt(0)}
-              </div>
+              <img
+                src={avatarUrl}
+                alt="Profile"
+                className="h-32 w-32 rounded-full object-cover border-4 border-white shadow-lg"
+              />
             )}
           </div>
         </div>
