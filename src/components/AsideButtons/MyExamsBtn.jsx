@@ -1,6 +1,6 @@
 import React from 'react'
 
-const MyExamsBtn = () => {
+const MyExamsBtn = ({setView}) => {
     return (
 
             <li>

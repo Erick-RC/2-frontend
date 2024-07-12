@@ -10,6 +10,8 @@ import MyExamsBtn from '../components/AsideButtons/MyExamsBtn.jsx';
 import { UserContext } from '../services/UserContext';
 import { MyInfoBtn } from '../components/AsideButtons/MyInfoBtn.jsx';
 import { MyInfo } from '../components/Dashboard/MyInfo.jsx';
+import Exams from '../components/Dashboard/Exams.jsx';
+import CreateExams from '../components/Dashboard/CreateExams.jsx';
 import { MainBtn } from '../components/AsideButtons/MainBtn.jsx';
 
 const Dashboard = () => {
@@ -41,17 +43,19 @@ const Dashboard = () => {
   }
 
   if (!user) {
-    return <div>User not logged in...</div>;
+    return <div>User not logged in...</div>; 
   }
 
   const renderView = () => {
     switch (view) {
       case 'students':
-        return <StudentsTable setView={setView} setEditStudentId={setEditStudentId} />;
+        return <StudentsTable />;
       case 'myInfo':
         return <MyInfo />;
-      case 'main':
-        return <MainContent />;
+        case 'exams':
+          return <Exams />
+        case 'createExam': 
+        return <CreateExams /> 
       case 'welcome':
       default:
         return <MainContent />;
@@ -61,9 +65,10 @@ const Dashboard = () => {
   return (
     <div className="flex h-screen bg-gray-100">
       <aside
-        className={`fixed top-0 left-0 z-40 w-64 h-full transition-transform transform ${
+        id="logo-sidebar"
+        className={`fixed top-0 left-0 z-40 w-64 h-screen  transition-transform transform ${
           sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-        } bg-white border-r border-gray-200 sm:translate-x-0 custom-scrollbar`} // Aquí agregamos la clase custom-scrollbar
+        } bg-white border-r border-gray-200 sm:translate-x-0`}
         aria-label="Sidebar"
       >
         <div className="h-full flex flex-col bg-gradient-to-b from-custom-MainSky to-emerald-100">
@@ -71,7 +76,7 @@ const Dashboard = () => {
             <img className="h-32" src="./logo-transparent-png.png" alt="logo" />
           </div>
           <div className="flex-1 px-3 pb-4 overflow-y-auto">
-            <ul className="space-y-14 font-medium mt-14">
+            <ul className="space-y-14 font-medium mt-10">
               {user.role === 'teacher' ? (
                 <>
                   <ExamsBtn setView={setView} />
@@ -84,6 +89,7 @@ const Dashboard = () => {
                   <MainBtn setView={setView} />
                   <MyVideosBtn setView={setView} />
                   <MyInfoBtn setView={setView} />
+                  <MyExamsBtn setView={setView} />
                 </>
               ) : null}
             </ul>
